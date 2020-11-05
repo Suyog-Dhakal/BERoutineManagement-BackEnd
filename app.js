@@ -20,10 +20,19 @@ app.set('view engine', 'jade');
 
 app.use(cookieParser('secret'));
 
+mongoose.connect('mongodb+srv://sumit:sumitbhagat@cluster0.1pfkx.mongodb.net/routineTu?retryWrites=true&w=majority', {
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useCreateIndex: true,
+  useUnifiedTopology: true,
+});
+// mongoose.connect('mongodb://localhost:27017/routine', { useNewUrlParser: true });
+var db = mongoose.connection;
 
-
-mongoose.connect('mongodb://localhost:27017/routine', { useNewUrlParser: true });
-
+db.on('error', console.error.bind(console, '[DB CONNECTION ERROR]'));
+db.once('open', function () {
+  console.log('[DB CONNECTED]');
+});
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

@@ -35,11 +35,12 @@ router.post('/api/class', async function (req, res) {
     teacherName,
     classCode,
     classGroup,
+    startingPeriod,
     noOfPeriod,
     courseCode,
     link1,
-    startTime,
-    endTime,
+    // startTime,
+    // endTime,
     weekDay
   } = req.body;
 
@@ -49,11 +50,12 @@ router.post('/api/class', async function (req, res) {
       teacherName: teacherName,
       classCode: classCode,
       classGroup: classGroup,
+      startingPeriod: startingPeriod,
       noOfPeriod: noOfPeriod,
       courseCode: courseCode,
       link1: link1,
-      startTime: startTime,
-      endTime: endTime,
+      // startTime: startTime,
+      // endTime: endTime,
       weekDay: weekDay
     })
     console.log(newClass)
