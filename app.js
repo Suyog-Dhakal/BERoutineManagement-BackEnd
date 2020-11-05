@@ -3,26 +3,26 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const MongoClient = require('mongodb').MongoClient;
-const assert = require('assert');
+// const MongoClient = require('mongodb').MongoClient;
+// const assert = require('assert');
+var mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
 
-// Connection URL
-const url = 'mongodb://localhost:27017';
 
-// Database Name
-const dbName = 'routine';
 
-// Create a new MongoClient
-const client = new MongoClient(url);
 
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+app.use(cookieParser('secret'));
+
+
+
+mongoose.connect('mongodb://localhost:27017/routine', { useNewUrlParser: true });
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -38,14 +38,14 @@ app.use(function (req, res, next) {
   next(createError(404));
 });
 
-client.connect(function (err) {
-  assert.equal(null, err);
-  console.log("Connected successfully to server");
+// client.connect(function (err) {
+//   assert.equal(null, err);
+//   console.log("Connected successfully to server");
 
-  const db = client.db(dbName);
+//   const db = client.db(dbName);
 
-  client.close();
-});
+//   client.close();
+// });
 
 // error handler
 app.use(function (err, req, res, next) {
