@@ -22,6 +22,28 @@ router.get('/', async function (req, res) {
     }
 });
 
+router.get('/:id', async function (req, res) {
+    try {
+        const id = req.params.id;
+        const allTeacher = await Teacher.findById({ _id: id });
+        return res.json({
+            status: true,
+            data: allTeacher,
+            err: {},
+            msg: "Teachers fetched successfully.",
+        });
+    } catch (err) {
+        return res.json({
+            status: false,
+            data: {},
+            err,
+            msg: "Unable to fetch teachers.",
+        });
+    }
+});
+
+
+
 router.post('/add', async function (req, res) {
     const {
         teacherName,
