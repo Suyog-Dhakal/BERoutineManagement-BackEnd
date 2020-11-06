@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
+var cors = require('cors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -21,7 +22,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use(cookieParser('secret'));
-
+app.use(cors());
 mongoose.connect('mongodb+srv://sumit:sumitbhagat@cluster0.1pfkx.mongodb.net/routineTu?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useFindAndModify: false,
@@ -30,6 +31,8 @@ mongoose.connect('mongodb+srv://sumit:sumitbhagat@cluster0.1pfkx.mongodb.net/rou
 });
 // mongoose.connect('mongodb://localhost:27017/routine', { useNewUrlParser: true });
 var db = mongoose.connection;
+
+
 
 db.on('error', console.error.bind(console, '[DB CONNECTION ERROR]'));
 db.once('open', function () {
