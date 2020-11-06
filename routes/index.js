@@ -31,6 +31,7 @@ router.get('/api/class', async function (req, res) {
 
 router.post('/api/class', async function (req, res) {
   const {
+    routineFor,
     subjectName,
     teacherName,
     classCode,
@@ -39,13 +40,12 @@ router.post('/api/class', async function (req, res) {
     noOfPeriod,
     courseCode,
     link1,
-    // startTime,
-    // endTime,
     weekDay
   } = req.body;
 
   try {
     var newClass = new Class({
+      routineFor: routineFor,
       subjectName: subjectName,
       teacherName: teacherName,
       classCode: classCode,
@@ -54,8 +54,6 @@ router.post('/api/class', async function (req, res) {
       noOfPeriod: noOfPeriod,
       courseCode: courseCode,
       link1: link1,
-      // startTime: startTime,
-      // endTime: endTime,
       weekDay: weekDay
     })
     console.log(newClass)
@@ -64,14 +62,14 @@ router.post('/api/class', async function (req, res) {
       status: true,
       data: newClass,
       err: {},
-      msg: "Classes saved successfully.",
+      msg: "Class added successfully.",
     });
   } catch {
     return res.json({
       status: false,
       data: {},
       err,
-      msg: "Unable to save classes.",
+      msg: "Unable to add class.",
     });
   }
 
