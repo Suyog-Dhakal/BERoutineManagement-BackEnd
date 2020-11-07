@@ -5,7 +5,7 @@ var Teacher = require('../Schema/teacherSchema');
 
 router.get('/', async function (req, res) {
     try {
-        const allTeacher = await Teacher.find({});
+        const allTeacher = await Teacher.find({}).sort({ teacherName: 1 });
         return res.json({
             status: true,
             data: allTeacher,

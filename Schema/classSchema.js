@@ -13,7 +13,7 @@ var classSchema = new mongoose.Schema({
     link1: { type: String, required: false },
     weekDay: {
         type: String, enum: ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday',
-            'friday', 'everyday'], required: false
+            'friday'], required: false
     },
 }, { timestamps: true });
 
