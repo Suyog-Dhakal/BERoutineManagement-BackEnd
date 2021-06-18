@@ -8,7 +8,7 @@ const mongoose              = require('mongoose');
 const session               = require('express-session')
 const hbs                   = require('express-handlebars')
 const passport              = require('passport')
-
+require('./config/passport')
 
 // const MongoClient = require('mongodb').MongoClient;
 // const assert = require('assert');
