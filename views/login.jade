@@ -1,0 +1,31 @@
+doctype html
+
+link(rel="stylesheet", href="/css/style.css")
+form(action="/login" method="POST")
+    div
+        if error
+            p.err-msg Username or password is incorrect
+
+        h1 Login
+        
+    div(class="form-group")
+        label Username:
+        input(
+            type = "text",
+            name = "username",
+            id = "username",
+            placeholder = "Enter your username",
+            required
+        )
+    div(class="form-group")
+        label Password:
+        input(
+            type = "password",
+            name = "password",
+            id = "password",
+            placeholder = "Enter your password",
+            required
+        )
+    
+    div
+        input(type="submit", value="Login")

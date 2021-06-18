@@ -1,5 +1,5 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
 
 var teacherSchema = new mongoose.Schema({
     teacherName: { type: String, required: false },
@@ -7,4 +7,6 @@ var teacherSchema = new mongoose.Schema({
     designation: { type: String, required: false }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Teacher', teacherSchema);
+
+
+module.exports = mongoose.model('Teacher', teacherSchema)

@@ -1,20 +1,24 @@
-var createError = require('http-errors');
-var express = require('express');
-var cors = require('cors');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError           = require('http-errors');
+const express               = require('express');
+const cors                  = require('cors');
+const path                  = require('path');
+const cookieParser          = require('cookie-parser');
+const logger                = require('morgan');
+const mongoose              = require('mongoose');
+const session               = require('express-session')
+const hbs                   = require('express-handlebars')
+const passport              = require('passport')
+
+
 // const MongoClient = require('mongodb').MongoClient;
 // const assert = require('assert');
-var mongoose = require('mongoose');
 
-var indexRouter = require('./routes/index');
-var programRouter = require('./routes/program');
-var teacherRouter = require('./routes/teacher');
-var usersRouter = require('./routes/users');
+const indexRouter           = require('./routes/index');
+const programRouter         = require('./routes/program');
+const teacherRouter         = require('./routes/teacher');
+const usersRouter           = require('./routes/users');
 
-var app = express();
-
+const app = express();
 
 
 
@@ -29,12 +33,18 @@ mongoose.connect('mongodb+srv://sumit:sumitbhagat@cluster0.1pfkx.mongodb.net/rou
   useCreateIndex: true,
   useUnifiedTopology: true,
 });
+
+// app.engine('hbs', hbs({ defaultLayout: 'main', extname: '.hbs' }))
+// app.set('views', path.join(__dirname, 'views'))
+// app.set('view engine', 'hbs')
+
+
 // mongoose.connect('mongodb://localhost:27017/routine', { useNewUrlParser: true });
 var db = mongoose.connection;
 
 
 
-db.on('error', console.error.bind(console, '[DB CONNECTION ERROR]'));
+db.on('error', console.error.bind(console, 'XXX DB CONNECTION FAILED XXX'));
 db.once('open', function () {
   console.log('[DB CONNECTED]');
 });
@@ -42,12 +52,21 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname + '/public'));
 
 app.use('/', indexRouter);
 app.use('/api/program', programRouter);
 app.use('/api/teacher', teacherRouter);
 app.use('/users', usersRouter);
+
+app.use(session({
+    secret: 'process.env.SESSION_SECRET',
+    resave: false,
+    saveUninitialized: true,
+}))
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
