@@ -16,7 +16,7 @@ const router = express.Router();
 
 
 router.get('/', isLoggedIn, (req, res) => {
-    res.render('index', { title: 'User page' })
+    res.render('user', { title: 'User' })
 })
 
 router.get('/login', isLoggedOut,(req, res) => {
@@ -28,8 +28,8 @@ router.get('/login', isLoggedOut,(req, res) => {
 })
 
 router.post('/login', passport.authenticate('local', {
-    successRedirect: '/users',
-    failureRedirect: '/users/login?error=true',
+    successRedirect: '/user',
+    failureRedirect: '/user/login?error=true',
 }), (err) => console.log(err))
 
 // setup admin user
@@ -38,7 +38,7 @@ router.get('/admin', async (req, res) => {
 
     if (exists) {
         console.log('user exists')
-        res.redirect('/users/login')
+        res.redirect('/user/login')
         return
     }
 
@@ -48,7 +48,7 @@ router.get('/admin', async (req, res) => {
     })
     newAdmin.save()
 
-    res.redirect('/users/login')
+    res.redirect('/user/login')
 })
 
 router.get('/logout', (req, res) => {
@@ -58,12 +58,12 @@ router.get('/logout', (req, res) => {
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) return next()
-    res.redirect('/users/login')
+    res.redirect('/user/login')
 }
 
 function isLoggedOut(req, res, next) {
     if (!req.isAuthenticated()) return next()
-    res.redirect('/users')
+    res.redirect('/user')
 }
 
 // /* GET users listing. */
