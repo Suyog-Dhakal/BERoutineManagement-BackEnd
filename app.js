@@ -12,8 +12,6 @@ const passport              = require('passport')
 // const assert = require('assert')
 
 const indexRouter           = require('./routes/index')
-const programRouter         = require('./routes/program')
-const teacherRouter         = require('./routes/teacher')
 const usersRouter           = require('./routes/user')
 
 const app = express()
@@ -31,6 +29,12 @@ mongoose.connect('mongodb+srv://sumit:sumitbhagat@cluster0.1pfkx.mongodb.net/rou
   useCreateIndex: true,
   useUnifiedTopology: true,
 })
+// mongoose.connect('mongodb+srv://santos7117:7117santos@routine.tnsnq.mongodb.net/Routine?retryWrites=true&w=majority', {
+//   useNewUrlParser: true,
+//   useFindAndModify: false,
+//   useCreateIndex: true,
+//   useUnifiedTopology: true,
+// })
 
 // app.engine('hbs', hbs({ defaultLayout: 'main', extname: '.hbs' }))
 // app.set('views', path.join(__dirname, 'views'))
@@ -64,8 +68,6 @@ app.use(passport.session())
 require('./config/passport')
 
 app.use('/', indexRouter)
-app.use('/api/program', programRouter)
-app.use('/api/teacher', teacherRouter)
 app.use('/user', usersRouter)
 
 // catch 404 and forward to error handler

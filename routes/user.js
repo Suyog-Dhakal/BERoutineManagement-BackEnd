@@ -1,8 +1,7 @@
 const express               = require('express')
 const passport              = require('passport')
-const bcrypt                = require('bcrypt')
-const User                  = require('../Schema/userSchema')
-const hash                  = require('../config/passport')
+const adminRouter           = require('./admin')
+const auth                  = require('../config/auth')
 
 const router = express.Router();
 
@@ -14,12 +13,13 @@ const router = express.Router();
 //     .catch(err => console.log('DB Connection Failed'))
 // const User = mongoose.model('User', UserSchema)
 
+router.use('/admin', adminRouter)
 
-router.get('/', isLoggedIn, (req, res) => {
+router.get('/', auth.isLoggedIn, (req, res) => {
     res.render('user', { title: 'User' })
 })
 
-router.get('/login', isLoggedOut,(req, res) => {
+router.get('/login', auth.isLoggedOut,(req, res) => {
     const response = {
         title: 'Login',
         error: req.query.error,
@@ -32,39 +32,10 @@ router.post('/login', passport.authenticate('local', {
     failureRedirect: '/user/login?error=true',
 }), (err) => console.log(err))
 
-// setup admin user
-router.get('/admin', async (req, res) => {
-    const exists = await User.exists({ username: 'admin' })
-
-    if (exists) {
-        console.log('user exists')
-        res.redirect('/user/login')
-        return
-    }
-
-    const newAdmin = new User({
-        username: 'admin',
-        password: hash('admin'),
-    })
-    newAdmin.save()
-
-    res.redirect('/user/login')
-})
-
 router.get('/logout', (req, res) => {
     req.logout()
     res.redirect('/')
 })
-
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) return next()
-    res.redirect('/user/login')
-}
-
-function isLoggedOut(req, res, next) {
-    if (!req.isAuthenticated()) return next()
-    res.redirect('/user')
-}
 
 // /* GET users listing. */
 // router.get('/', function(req, res, next) {

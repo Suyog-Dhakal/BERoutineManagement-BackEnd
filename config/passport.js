@@ -27,17 +27,3 @@ passport.deserializeUser((id, done) => {
         done(err, user)
     })
 })
-
-function hash(password) {
-    bcrypt.genSalt(10, (err, salt) => {
-        if (err) return next(err)
-        bcrypt.hash(password, salt, function(err, hashed) {
-            if (err) return next(err)
-            return hashed
-        })
-    })
-}
-
-
-
-module.exports.hash = hash;
