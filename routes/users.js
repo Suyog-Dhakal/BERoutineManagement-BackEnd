@@ -2,6 +2,7 @@ const express               = require('express')
 const passport              = require('passport')
 const bcrypt                = require('bcrypt')
 const User                  = require('../Schema/userSchema')
+const hash                  = require('../config/passport')
 
 const router = express.Router();
 
@@ -41,20 +42,13 @@ router.get('/admin', async (req, res) => {
         return
     }
 
-    bcrypt.genSalt(10, (err, salt) => {
-        if (err) return next(err)
-        bcrypt.hash('admin', salt, function(err, hash) {
-            if (err) return next(err)
-
-            const newAdmin = new User({
-                username: 'admin',
-                password: hash,
-            })
-            newAdmin.save()
-
-            res.redirect('/users/login')
-        })
+    const newAdmin = new User({
+        username: 'admin',
+        password: hash('admin'),
     })
+    newAdmin.save()
+
+    res.redirect('/users/login')
 })
 
 router.get('/logout', (req, res) => {
