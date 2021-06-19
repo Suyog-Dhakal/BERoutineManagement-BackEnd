@@ -1,6 +1,7 @@
 const express               = require('express')
 const passport              = require('passport')
 const bcrypt                = require('bcrypt')
+const User                  = require('../Schema/userSchema')
 
 const router = express.Router();
 
@@ -13,11 +14,11 @@ const router = express.Router();
 // const User = mongoose.model('User', UserSchema)
 
 
-router.get('/', /*isLoggedIn,*/ (req, res) => {
+router.get('/', isLoggedIn, (req, res) => {
     res.render('index', { title: 'User page' })
 })
 
-router.get('/login', /*isLoggedOut,*/ (req, res) => {
+router.get('/login', isLoggedOut,(req, res) => {
     const response = {
         title: 'Login',
         error: req.query.error,
@@ -28,7 +29,7 @@ router.get('/login', /*isLoggedOut,*/ (req, res) => {
 router.post('/login', passport.authenticate('local', {
     successRedirect: '/users',
     failureRedirect: '/users/login?error=true',
-}))
+}), (err) => console.log(err))
 
 // setup admin user
 router.get('/admin', async (req, res) => {
@@ -44,11 +45,11 @@ router.get('/admin', async (req, res) => {
         if (err) return next(err)
         bcrypt.hash('admin', salt, function(err, hash) {
             if (err) return next(err)
+
             const newAdmin = new User({
                 username: 'admin',
                 password: hash,
             })
-
             newAdmin.save()
 
             res.redirect('/users/login')

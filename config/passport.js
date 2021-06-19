@@ -1,4 +1,5 @@
 const passport              = require('passport')
+const bcrypt                = require('bcrypt')
 const LocalStrategy         = require('passport-local').Strategy
 const User                  = require('../Schema/userSchema')
 
@@ -26,4 +27,3 @@ passport.deserializeUser((id, done) => {
         done(err, user)
     })
 })
-
