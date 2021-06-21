@@ -5,14 +5,6 @@ const auth                  = require('../config/auth')
 
 const router = express.Router();
 
-// mongoose.connect('mongodb+srv://santos7117:0ArqZiUUZSL3CGY6@routine.tnsnq.mongodb.net/Routine?retryWrites=true&w=majority', {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-// })
-//     .then(() => console.log('DB Connection Succeded'))
-//     .catch(err => console.log('DB Connection Failed'))
-// const User = mongoose.model('User', UserSchema)
-
 router.use('/admin', adminRouter)
 
 router.get('/', auth.isLoggedIn, (req, res) => {
@@ -37,11 +29,23 @@ router.get('/logout', (req, res) => {
     res.redirect('/')
 })
 
+
+
+module.exports = router;
+
+
+
+
+
 // /* GET users listing. */
 // router.get('/', function(req, res, next) {
 //   res.send('respond with a resource');
 // });
 
-
-
-module.exports = router;
+// mongoose.connect('mongodb+srv://@routine.tnsnq.mongodb.net/Routine?retryWrites=true&w=majority', {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+// })
+//     .then(() => console.log('DB Connection Succeded'))
+//     .catch(err => console.log('DB Connection Failed'))
+// const User = mongoose.model('User', UserSchema)

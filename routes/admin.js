@@ -1,6 +1,7 @@
 const express               = require('express')
 const programRouter         = require('./program')
 const teacherRouter         = require('./teacher')
+const classRouter           = require('./class')
 const User                  = require('../Schema/userSchema')
 const auth                  = require('../config/auth')
 
@@ -27,8 +28,11 @@ router.get('/', async (req, res) => {
     res.redirect('/user/login')
 })
 
-router.use('/api/teacher', auth.isAdmin, teacherRouter)
-router.use('/api/program', auth.isAdmin, programRouter)
+// router.use(auth.isAdmin())
+
+router.use('/api/teacher', teacherRouter)
+router.use('/api/program', programRouter)
+router.use('/api/class',   classRouter)
 
 
 module.exports = router

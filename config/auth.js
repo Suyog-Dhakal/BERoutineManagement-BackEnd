@@ -19,8 +19,8 @@ function isLoggedOut(req, res, next) {
     res.redirect('/user')
 }
 
-function isAdmin(req, res, next) {
-    
+function isAdmin() {
+
 }
 
 

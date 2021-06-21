@@ -8,11 +8,8 @@ const mongoose              = require('mongoose')
 const session               = require('express-session')
 const passport              = require('passport')
 
-// const MongoClient = require('mongodb').MongoClient
-// const assert = require('assert')
-
 const indexRouter           = require('./routes/index')
-const usersRouter           = require('./routes/user')
+const userRouter            = require('./routes/user')
 
 const app = express()
 
@@ -29,20 +26,14 @@ mongoose.connect('mongodb+srv://sumit:sumitbhagat@cluster0.1pfkx.mongodb.net/rou
   useCreateIndex: true,
   useUnifiedTopology: true,
 })
-// mongoose.connect('mongodb+srv://santos7117:7117santos@routine.tnsnq.mongodb.net/Routine?retryWrites=true&w=majority', {
+// mongoose.connect('mongodb+srv://@routine.tnsnq.mongodb.net/Routine?retryWrites=true&w=majority', {
 //   useNewUrlParser: true,
 //   useFindAndModify: false,
 //   useCreateIndex: true,
 //   useUnifiedTopology: true,
 // })
 
-// app.engine('hbs', hbs({ defaultLayout: 'main', extname: '.hbs' }))
-// app.set('views', path.join(__dirname, 'views'))
-// app.set('view engine', 'hbs')
-
-
-// mongoose.connect('mongodb://localhost:27017/routine', { useNewUrlParser: true })
-var db = mongoose.connection
+const db = mongoose.connection
 
 
 
@@ -68,21 +59,12 @@ app.use(passport.session())
 require('./config/passport')
 
 app.use('/', indexRouter)
-app.use('/user', usersRouter)
+app.use('/user', userRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404))
 })
-
-// client.connect(function (err) {
-//   assert.equal(null, err)
-//   console.log("Connected successfully to server")
-
-//   const db = client.db(dbName)
-
-//   client.close()
-// })
 
 // error handler
 app.use(function (err, req, res, next) {
@@ -99,3 +81,27 @@ app.use(function (err, req, res, next) {
 
 
 module.exports = app
+
+
+
+
+
+
+// const MongoClient = require('mongodb').MongoClient
+// const assert = require('assert')
+
+// client.connect(function (err) {
+//   assert.equal(null, err)
+//   console.log("Connected successfully to server")
+
+//   const db = client.db(dbName)
+
+//   client.close()
+// })
+
+// app.engine('hbs', hbs({ defaultLayout: 'main', extname: '.hbs' }))
+// app.set('views', path.join(__dirname, 'views'))
+// app.set('view engine', 'hbs')
+
+
+// mongoose.connect('mongodb://localhost:27017/routine', { useNewUrlParser: true })
