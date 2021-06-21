@@ -1,6 +1,9 @@
 # Temp files
 temp/
 
+# Editor configs
+.vs/
+
 # Logs
 logs
 *.log

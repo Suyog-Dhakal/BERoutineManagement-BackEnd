@@ -5,7 +5,6 @@ const classRouter           = require('./class')
 const User                  = require('../Schema/userSchema')
 const auth                  = require('../config/auth')
 
-
 const router = express.Router()
 
 
@@ -33,6 +32,8 @@ router.get('/', async (req, res) => {
 router.use('/api/teacher', teacherRouter)
 router.use('/api/program', programRouter)
 router.use('/api/class',   classRouter)
+
+
 
 
 module.exports = router
