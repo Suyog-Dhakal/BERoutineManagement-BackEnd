@@ -4,7 +4,7 @@ const Class = require('../Schema/classSchema')
 const router = express.Router()
 
 
-router.get('/api/class', async function (req, res) {
+router.get('/', async function (req, res) {
     const populateQuery = [
       { path: 'routineFor', select: ['programName', 'year', 'part'] }, 
       { path: 'teacherName', select: ['teacherName', 'shortName'] }
@@ -31,7 +31,7 @@ router.get('/api/class', async function (req, res) {
     }
 })
   
-router.get('/api/class/:id', async function (req, res) {
+router.get('/:id', async function (req, res) {
     const populateQuery = [
         { path: 'routineFor', select: ['programName', 'year', 'part'] }, 
         { path: 'teacherName', select: ['teacherName', 'shortName'] }
@@ -58,7 +58,7 @@ router.get('/api/class/:id', async function (req, res) {
     }
 })
   
-router.post('/api/class', async function (req, res) {
+router.post('/', async function (req, res) {
     const {
         routineFor,
         subjectName,
@@ -103,7 +103,7 @@ router.post('/api/class', async function (req, res) {
     }
 })
   
-router.post('/api/class/edit/:id', async function (req, res) {
+router.post('/edit/:id', async function (req, res) {
     Class.findById(req.params.id, function (err, p) {
         if (!p) {
         return res.json({
@@ -141,7 +141,7 @@ router.post('/api/class/edit/:id', async function (req, res) {
     })
 })
   
-router.delete('/api/class/delete/:id', async function (req, res) {
+router.delete('/delete/:id', async function (req, res) {
     try {
         await Class.deleteOne({ _id: req.params.id })
         return res.json({
