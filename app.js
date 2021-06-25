@@ -20,7 +20,7 @@ app.set('view engine', 'jade')
 
 app.use(cookieParser('secret'))
 app.use(cors())
-mongoose.connect('mongodb+srv://sumit:sumitbhagat@cluster0.1pfkx.mongodb.net/routineTu?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://santos7117:7117santos@routine.tnsnq.mongodb.net/Routine?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useFindAndModify: false,
   useCreateIndex: true,
