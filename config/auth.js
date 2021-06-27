@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const User = require("../Schema/userSchema");
 
 const SALT_ROUNDS = 10;
 
@@ -18,7 +19,12 @@ function isLoggedOut(req, res, next) {
   res.redirect("/user");
 }
 
-function isAdmin() {}
+function isAdmin(req, res, err, next) {
+  if (req.username === "admin") {
+    return next();
+  }
+  res.render("error");
+}
 
 module.exports.hash = hash;
 module.exports.isLoggedIn = isLoggedIn;

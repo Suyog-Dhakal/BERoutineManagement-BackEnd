@@ -49,8 +49,8 @@ router.get("/", async (req, res) => {
 
 // router.use(auth.isAdmin())
 
-router.use("/api/teacher", teacherRouter);
-router.use("/api/program", programRouter);
-router.use("/api/class", classRouter);
+router.use("/api/teacher", auth.isLoggedIn, auth.isAdmin, teacherRouter);
+router.use("/api/program", auth.isLoggedIn, auth.isAdmin, programRouter);
+router.use("/api/class", auth.isLoggedIn, auth.isAdmin, classRouter);
 
 module.exports = router;
