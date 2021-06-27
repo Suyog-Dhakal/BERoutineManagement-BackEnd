@@ -1,41 +1,38 @@
-const express               = require('express')
-const passport              = require('passport')
-const adminRouter           = require('./admin')
-const auth                  = require('../config/auth')
-
+const express = require("express");
+const passport = require("passport");
+const adminRouter = require("./admin");
+const auth = require("../config/auth");
 const router = express.Router();
 
-router.use('/admin', adminRouter)
+router.use("/admin", adminRouter);
 
-router.get('/', auth.isLoggedIn, (req, res) => {
-    res.render('user', { title: 'User' })
-})
+router.get("/", auth.isLoggedIn, (req, res) => {
+  res.render("user", { title: req.user.username });
+});
 
-router.get('/login', auth.isLoggedOut,(req, res) => {
-    const response = {
-        title: 'Login',
-        error: req.query.error,
-    }
-    res.render('login', response)
-})
+router.get("/login", auth.isLoggedOut, (req, res) => {
+  const response = {
+    title: "Login",
+    error: req.query.error,
+  };
+  res.render("login", response);
+});
 
-router.post('/login', passport.authenticate('local', {
-    successRedirect: '/user',
-    failureRedirect: '/user/login?error=true',
-}), (err) => console.log(err))
+router.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/user",
+    failureRedirect: "/user/login?error=true",
+  }),
+  (err) => console.log(err)
+);
 
-router.get('/logout', (req, res) => {
-    req.logout()
-    res.redirect('/')
-})
-
-
+router.get("/logout", (req, res) => {
+  req.logout();
+  res.redirect("/");
+});
 
 module.exports = router;
-
-
-
-
 
 // /* GET users listing. */
 // router.get('/', function(req, res, next) {

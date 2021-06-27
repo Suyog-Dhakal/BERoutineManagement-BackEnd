@@ -17,21 +17,19 @@ router.get("/", async (req, res) => {
   };
 
   try {
-    let admin = await User.findOne({
+    const adminSchema = {
       username: "admin",
       password: auth.hash("admin"),
-    });
+    };
 
     // check if admin already exists
+    let admin = await User.findOne(adminSchema);
     if (admin) {
       response.msg = "Admin user found.";
       return res.json(response);
     }
 
-    admin = new User({
-      username: "admin",
-      password: auth.hash("admin"),
-    });
+    admin = new User(adminSchema);
 
     if (admin.save()) {
       response.msg = "New Admin user created.";
