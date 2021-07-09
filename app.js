@@ -17,8 +17,11 @@ const app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
 
-app.use(cookieParser("secret"));
-app.use(cors());
+app.use(cookieParser("process.env.SESSION_SECRET"));
+app.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true,
+}));
 mongoose.connect(
   "mongodb+srv://santos7117:7117santos@routine.tnsnq.mongodb.net/Routine?retryWrites=true&w=majority",
   {
@@ -45,7 +48,6 @@ db.once("open", function () {
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.static(__dirname + "/public"));
-app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 
 app.use(

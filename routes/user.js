@@ -7,7 +7,7 @@ const router = express.Router();
 router.use("/admin", adminRouter);
 
 router.get("/", auth.isLoggedIn, (req, res) => {
-  res.render("user", { title: req.user.username });
+  res.render("user", { title: req.body.username });
 });
 
 router.get("/login", auth.isLoggedOut, (req, res) => {
@@ -20,6 +20,7 @@ router.get("/login", auth.isLoggedOut, (req, res) => {
 
 router.post(
   "/login",
+  // (req, res, next) => {console.log(req.body); next()},
   passport.authenticate("local", {
     successRedirect: "/user",
     failureRedirect: "/user/login?error=true",
