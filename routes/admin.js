@@ -23,7 +23,7 @@ router.get("/", async (req, res) => {
     };
 
     // check if admin already exists
-    let admin = await User.findOne(adminSchema);
+    let admin = await User.findOne({username: 'admin'});
     if (admin) {
       response.msg = "Admin user found.";
       return res.json(response);
