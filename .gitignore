@@ -3,7 +3,7 @@ temp/
 
 # Editor configs
 .vs/
-.vs
+.vscode/
 
 # Logs
 logs
