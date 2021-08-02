@@ -34,6 +34,10 @@ passport.serializeUser((user, done) => {
 // Grabs a serialized user from session
 passport.deserializeUser((id, done) => {
   User.findById(id, function (err, user) {
+    // const userInfo = {
+    //   username: user.username,
+    // }
+    // done(err, userInfo)
     done(err, user)
   })
 })

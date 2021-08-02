@@ -1,4 +1,3 @@
-
 ## IOE Routine Management System - Backend
 
 - This is IOE Routine Management System for managing your everyday Lectures and Labs in IOE - developed using React.js and [Ant-Design](https://ant.design/) Component Library.

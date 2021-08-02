@@ -1,18 +1,18 @@
 const express = require("express")
 const passport = require("passport")
+const { isLoggedIn, isLoggedOut } = require("../config/auth")
 const adminRouter = require("./admin")
-const auth = require("../config/auth")
 const router = express.Router()
 
 router.use("/admin", adminRouter)
 
-router.get("/", auth.isLoggedIn, (req, res) => {
+router.get("/", isLoggedIn, (req, res) => {
   console.log("user is: ", req.user)
   // res.send(req.user)
-  // res.render("user", { title: req.body.username });
+  res.render("user", { title: req.user.username })
 })
 
-router.get("/login", auth.isLoggedOut, (req, res) => {
+router.get("/login", isLoggedOut, (req, res) => {
   const response = {
     title: "Login",
     error: req.query.error,
@@ -21,7 +21,8 @@ router.get("/login", auth.isLoggedOut, (req, res) => {
 })
 
 router.post("/login", passport.authenticate("local"), (req, res) => {
-  res.send(req.user)
+  req.session.user = req.user
+  res.status(200).send(req.user)
 })
 
 router.get("/logout", (req, res) => {

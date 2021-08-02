@@ -54,6 +54,7 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use(
   session({
+    key: "userId",
     secret: "process.env.SESSION_SECRET",
     resave: false,
     saveUninitialized: true,

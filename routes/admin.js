@@ -1,11 +1,10 @@
-const express = require("express");
-const programRouter = require("./program");
-const teacherRouter = require("./teacher");
-const classRouter = require("./class");
-const User = require("../Schema/userSchema");
-const auth = require("../config/auth");
+const express = require("express")
+const programRouter = require("./program")
+const teacherRouter = require("./teacher")
+const User = require("../Schema/userSchema")
+const { hash, isAdmin, isLoggedIn } = require("../config/auth")
 
-const router = express.Router();
+const router = express.Router()
 
 // setup admin user
 router.get("/", async (req, res) => {
@@ -14,41 +13,39 @@ router.get("/", async (req, res) => {
     data: {},
     err: {},
     msg: "",
-  };
+  }
 
   try {
     const adminSchema = {
       username: "admin",
-      password: auth.hash("admin"),
-    };
+      password: hash("admin"),
+    }
 
     // check if admin already exists
-    let admin = await User.findOne({username: 'admin'});
+    let admin = await User.findOne({ username: "admin" })
     if (admin) {
-      response.msg = "Admin user found.";
-      return res.json(response);
+      response.msg = "Admin user found."
+      return res.json(response)
     }
 
-    admin = new User(adminSchema);
+    admin = new User(adminSchema)
 
     if (admin.save()) {
-      response.msg = "New Admin user created.";
+      response.msg = "New Admin user created."
     }
 
-    return res.json(response);
+    return res.json(response)
   } catch (err) {
     return res.json({
       status: false,
       err,
       msg: "!!! Admin user not found",
-    });
+    })
   }
-});
+})
 
-// router.use(auth.isAdmin())
-
-router.use("/api/teacher", auth.isLoggedIn, auth.isAdmin, teacherRouter);
-router.use("/api/program", auth.isLoggedIn, auth.isAdmin, programRouter);
+router.use("/api/teacher", isLoggedIn, isAdmin, teacherRouter)
+router.use("/api/program", isLoggedIn, isAdmin, programRouter)
 // router.use("/api/class", auth.isLoggedIn, auth.isAdmin, classRouter);
 
-module.exports = router;
+module.exports = router
